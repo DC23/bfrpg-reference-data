@@ -1,0 +1,99 @@
+- name: Manticore
+  stats:
+    armor_class: "18"
+    hit_dice: "6+1*"
+    no_of_attacks: "2 claws, 1 bite\nor 1d8 spikes (180' range)"
+    damage: "1d4 claw, 2d4 bite, 1d6 spike"
+    movement: "40' Fly 60' (10')"
+    no_appearing: "1d2, Wild 1d4, Lair 1d4"
+    save_as: "Fighter: 6"
+    morale: "9"
+    treasure_type: "D"
+    xp: "555"
+
+- name: Troll (and Trollwife)
+  variants:
+    troll:
+      armor_class: "16"
+      hit_dice: "6*"
+      damage: "1d6 claw,\n1d10 bite"
+      movement: "40'"
+      no_appearing: "1d8, Wild 1d8,\nLair 1d8"
+      save_as: "Fighter: 6"
+      morale: "10 (8)"
+      treasure_type: "D"
+      xp: "555"
+    trollwife:
+      armor_class: "17"
+      hit_dice: "7*"
+      damage: "1d8 claw,\n2d6 bite"
+      movement: "40'"
+      save_as: "Fighter: 7"
+      morale: "10 (8), see below"
+      treasure_type: "D"
+      xp: "735"
+
+- name: Dragon, Cloud
+  group: dragon
+  stats:
+    armor_class: "22"
+    hit_dice: "11** (+9)"
+    movement: "30' Fly 80' (20')"
+    no_appearing: "1, Wild 1, Lair 1d4"
+    treasure_type: "H"
+    morale: "10"
+    xp: "1,765"
+  age_categories:
+    - category: "1"
+      hit_dice: "8"
+      attack_bonus: "+8"
+      claw: "1d6"
+      bite: "3d6"
+      tail: "1d4"
+      chance_talking: "0%"
+      breath_weapon:
+        length: "-"
+        width: "-"
+    - category: "7"
+      hit_dice: "14"
+      attack_bonus: "+11"
+      claw: "2d8"
+      bite: "7d6"
+      tail: "2d8"
+      chance_talking: "95%"
+      breath_weapon:
+        length: "110'"
+        width: "60'"
+
+- name: Elemental, Air
+  variants:
+    staff:
+      armor_class: "18 (m)"
+      hit_dice: "8*"
+      damage: "1d12"
+      save_as: "Fighter: 8"
+      xp: "945"
+    device:
+      armor_class: "20 (m)"
+      hit_dice: "12* (+10)"
+      damage: "2d8"
+      save_as: "Fighter: 12"
+      xp: "1,975"
+    spell:
+      armor_class: "22 (m)"
+      hit_dice: "16* (+12)"
+      damage: "3d6"
+      save_as: "Fighter: 16"
+      xp: "3,385"
+
+- name: Camel
+  stats:
+    armor_class: "13"
+    hit_dice: "2"
+    no_of_attacks: "1 bite, 1 hoof"
+    damage: "1 point bite, 1d4 hoof"
+    movement: "50' (10') [ 40' (10') ]"
+    no_appearing: "Wild 2d4"
+    save_as: "Fighter: 2"
+    morale: "7"
+    xp: "75"

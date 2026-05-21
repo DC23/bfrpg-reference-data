@@ -8,10 +8,14 @@ dependencies = []
 dev = [
     "pytest>=8.0",
     "pyyaml>=6.0",
+    "black>=24.0",
 ]
 
 [tool.setuptools]
 packages = ["scripts"]
+
+[tool.black]
+target-version = ["py312"]
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]

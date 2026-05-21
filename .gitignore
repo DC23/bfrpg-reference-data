@@ -4,3 +4,6 @@ json/
 data/
 .*/
 notes.md
+bfrpg_reference_data.egg-info/
+**/__pycache__/
+**/*.pyc

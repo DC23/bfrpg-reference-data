@@ -6,6 +6,7 @@ Yields events from an ODT document body:
   ('list',  items)                         — bulleted/numbered list; items is list[str]
 """
 
+import re
 import zipfile
 import xml.etree.ElementTree as ET
 
@@ -16,6 +17,11 @@ _NS = {
     "table": "urn:oasis:names:tc:opendocument:xmlns:table:1.0",
     "fo": "urn:oasis:names:tc:opendocument:xmlns:xsl-fo-compatible:1.0",
 }
+
+
+def normalise_spaces(text: str) -> str:
+    """Collapse runs of 2+ spaces to a single space and strip."""
+    return re.sub(r" {2,}", " ", text).strip()
 
 
 def _xml_tag(prefix, local):

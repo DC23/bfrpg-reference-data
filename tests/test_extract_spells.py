@@ -38,6 +38,11 @@ def test_fixture_spells(spells):
         name = entry["name"]
         spell = find_by_name(spells, name, "spell")
 
+        if "description" in entry:
+            assert (
+                spell.get("description") == entry["description"]
+            ), f"{name}: wrong description: expected {entry['description']!r}, got {spell.get('description')!r}"
+
         if "reversible" in entry:
             assert (
                 spell.get("reversible") == entry["reversible"]

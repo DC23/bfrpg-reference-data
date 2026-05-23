@@ -16,7 +16,13 @@ from typing import Any
 
 import yaml
 
-from scripts.odt_parser import OdtParser, _ATTR_TEXT_STYLE, _HEADING, _PARAGRAPH
+from scripts.odt_parser import (
+    OdtParser,
+    _ATTR_TEXT_STYLE,
+    _HEADING,
+    _PARAGRAPH,
+    normalise_spaces,
+)
 
 _EXPLAIN_HEADING = "Explanation of Equipment"
 _SIEGE_HEADING = "Siege Engines"
@@ -58,7 +64,7 @@ def _match_items(hint: str, items: list[dict]) -> list[dict]:
 
 def _normalise_desc(raw: str) -> str:
     """Replace newlines with spaces and collapse runs of 2+ spaces."""
-    return re.sub(r" {2,}", " ", raw.replace("\n", " ")).strip()
+    return normalise_spaces(raw.replace("\n", " "))
 
 
 def _segment_runs(

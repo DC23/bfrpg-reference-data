@@ -10,7 +10,7 @@ import re
 from pathlib import Path
 from typing import Any
 
-from scripts.odt_parser import OdtParser
+from scripts.odt_parser import OdtParser, normalise_spaces
 
 ROOT = Path(__file__).parent.parent
 ODT_PATH = ROOT / "data" / "Basic-Fantasy-RPG-Rules-r142.odt"
@@ -144,7 +144,7 @@ def _extract_description(events: list[tuple]) -> list[Any]:
     description: list[Any] = []
     for event in events:
         if event[0] == "p" and event[1] not in _meta_styles:
-            text = event[2].strip()
+            text = normalise_spaces(event[2])
             if text:
                 description.append(text)
         elif event[0] == "table":

@@ -3,13 +3,20 @@
 # entry are not tested — fixture-subset matching, same as monster fixtures.
 # All string values match raw document text; spell levels are integers.
 
-# Standard single-class spell
+# Standard single-class spell; paragraph [4] has an embedded image in the source —
+# confirms the parser silently skips the frame and captures surrounding text correctly
 - name: Charm Person
   classes:
     - class: Magic-User
       level: 1
   range: "30'"
   duration: "special"
+  description:
+    - "This spell causes a humanoid (including all character races as well as creatures such as orcs, goblins, gnolls, and so on) of 4 hit dice or less to perceive the caster as a close friend, love interest, or at the very least as its trusted ally. Normal characters (PC or NPC) may be affected regardless of level of ability."
+    - "A save vs. Spells will negate the effect. If hostilities have already commenced or the target otherwise feels threatened by the caster, it receives a bonus of +5 on its saving throw."
+    - "The caster does not directly control the target; rather, orders must be given verbally, in writing, or by means of gestures. Obviously, verbal orders will only work if the target and caster share a spoken language, and the same limitation applies to written orders. Also note that the exact perception of the caster by the affected individual is not under the control of the caster; the GM should decide how the subject of this spell perceives its relationship to the caster."
+    - "Commands that go against the target's basic nature or ask it to attack its own allies or friends grant it a fresh saving throw with a bonus of +5 on the roll. Even if the target fails this save it may still choose to do something else when commanded to perform an unwanted action. Of course, if the caster is attacked, the charmed creature will act to protect its \"friend\" (though that could mean attacking its own allies, which might cause the target to instead attempt to carry off the caster to a \"safe\" place)."
+    - "The target receives a new saving throw each day if it has an Intelligence of 13 or greater, every week if its Intelligence is 9-12, or every month if its Intelligence is 8 or less; the GM must rule on the equivalent intelligence of humanoid monsters."
 
 # Reversible single-class spell
 # Source has asterisk suffix on name; extractor strips it and sets reversible: true
@@ -20,6 +27,9 @@
       level: 2
   range: "50' radius"
   duration: "1 minute/level"
+  description: 
+     - "This spell gives the caster and their allies within a 50' radius a bonus of +1 on all attack rolls, morale checks (for monsters or NPCs allied with the caster), and saving throws vs. any kind of magical fear. Casters of the 7th or higher level grant a bonus of +2 to attacks and saves vs. fear, but the morale bonus remains +1."
+     - "The reverse of bless is called bane. The caster's enemies within a 50' radius become fearful and uncertain, causing them to suffer a penalty of -1 on attack rolls, morale checks, and saving throws vs. any kind of magical fear. Casters of the 7th or higher level apply a penalty of -2 to attacks and saves vs. fear, but the morale penalty remains -1."
 
 # Dual-class spell (appears in both Cleric and Magic-User spell lists)
 - name: Animate Dead
@@ -42,13 +52,23 @@
   range: "120'"
   duration: "6 turns + 1/level"
 
-# Spell with embedded roll table
+# Spell with embedded roll table — description is prose, table dict, prose
 - name: Confusion
   classes:
     - class: Magic-User
       level: 4
   range: "280'+10'/ level"
   duration: "2 rounds+1/level"
+  description:
+    - "This spell causes up to 3d6 living creatures within a 30' radius to become unable to think clearly, their actions thus becoming unpredictable. A saving throw vs. Spells is allowed to resist the effect. Roll on the following table on each subject’s Initiative number each round to see what the subject does."
+    - table:
+        - ['d10', 'Behavior']
+        - ['1', 'Act normally.']
+        - ['2', 'Move toward the caster, and attack if possible.']
+        - ['3-5', 'Take no action except possibly to babble.']
+        - ['6-7', 'Move swiftly away from the caster.']
+        - ['8-10', 'Attack the nearest creature, regardless of whether it is a friend or foe.']
+    - "If the target cannot perform the action indicated, the GM should move down the table (going back to the top if the table runs out) until an action is found that the target can perform. If a confused creature is attacked, it returns the attack on its next initiative number (later in this round or in the next round if it has already acted) regardless of what is rolled on the table."
 
 # Spell with embedded roll table
 - name: Reincarnate
@@ -77,3 +97,13 @@
       level: 4
   range: "30'"
   duration: "instantaneous"
+
+# Simple spell with short description
+- name: Anti-Magic Shell 
+  range: "10' radius"
+  duration: "1 turn/level"
+  classes:
+    - class: Magic-User
+      level: 6
+  description: 
+    - "Within a 10' radius around the caster, all magic is negated for the full duration of the spell. Magical attacks will not affect the caster, magic items and spells within the radius are suppressed, and the caster cannot perform further magic until the spell has expired."

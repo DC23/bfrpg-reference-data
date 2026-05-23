@@ -2,7 +2,6 @@
 - name: Bit and bridle
   price: "15 sp"
   weight: "3"
-  description: null
 
 - name: Iron Spikes, 12
   price: "1 gp"

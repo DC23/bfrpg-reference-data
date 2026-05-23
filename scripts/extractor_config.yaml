@@ -12,6 +12,7 @@ split_tables:
 # enrichment.
 ignore_description_hints:
   - "flint and steel"   # mentioned within the Tinderbox description; not a separate item
+  - "Bolt Case"         # mentioned within the Quiver description; not a separate item
 
 # Items whose description appears in a section other than "Explanation of Equipment"
 # The extractor stores these without a description field; a separate pass or

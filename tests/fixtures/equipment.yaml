@@ -64,3 +64,8 @@
   price: "3 gp"
   weight: "1"
   description: "A Tinderbox is generally purchased with a flint and steel; the flint, a piece of hard rock, is struck vigorously against a C-shaped piece of high-carbon steel. When done correctly, hot sparks will fly from the flint and steel into the tinder, hopefully starting a fire. The best tinder is a dried piece of prepared tinder fungus, carried in the tinderbox to keep it dry; char cloth, hemp rope, or even very dry grass can substitute if prepared tinder fungus is not available. The time required to start a fire should be determined by the GM according to the prevailing conditions; under ideal conditions, starting a fire with a flint, steel and tinder takes about a turn."
+
+- name: Quiver or Bolt case
+  price: "1 gp"
+  weight: "1"
+  description: "A Quiver is an open container used to hold arrows. A Bolt Case is a similar sort of container for crossbow bolts. In either case, the standard capacity is 20 missiles. The length of a quiver or bolt case must match the length of the ammunition for it to be useful; therefore, there are longbow and shortbow quivers and light and heavy crossbow bolt cases. The price is the same for all types."

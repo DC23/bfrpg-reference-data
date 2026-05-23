@@ -1,0 +1,8 @@
+# extractor_config.yaml
+# Configuration overrides for the BFRPG extraction scripts.
+
+# Entries listed here are multi-entity tables that should be split into
+# individual entity files rather than kept as a single multi-variant entry.
+split_tables:
+  - entry: "Beasts of Burden"
+    reason: "Editorial grouping of unrelated creatures; each beast is an independent entry"

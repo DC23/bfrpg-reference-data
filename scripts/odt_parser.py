@@ -33,6 +33,7 @@ _LIST_ITEM = _xml_tag("text", "list-item")
 # Table elements
 _TABLE = _xml_tag("table", "table")
 _TABLE_ROW = _xml_tag("table", "table-row")
+_TABLE_HEADER_ROWS = _xml_tag("table", "table-header-rows")
 _TABLE_CELL = _xml_tag("table", "table-cell")
 _TABLE_CELL_COV = _xml_tag("table", "covered-table-cell")  # merged/spanned cell
 
@@ -121,19 +122,29 @@ class OdtParser:
         collect(element)
         return "".join(parts)
 
+    def _read_row(self, row_el: ET.Element) -> list[str]:
+        row = []
+        for cell_el in row_el:
+            if cell_el.tag not in (_TABLE_CELL, _TABLE_CELL_COV):
+                continue
+            paragraphs = [self.get_text(p) for p in cell_el.findall(f".//{_PARAGRAPH}")]
+            row.append("\n".join(paragraphs))
+        return row
+
     def _read_table(self, table_el: ET.Element) -> list[list[str]]:
-        """Return list of rows; each row is a list of cell text strings."""
+        """Return list of rows; each row is a list of cell text strings.
+
+        Rows in table:table-header-rows are prepended before the body rows so
+        that tables using the ODT header-row mechanism are indistinguishable
+        from tables where the header is a regular first row.
+        """
         rows = []
+        hdr_container = table_el.find(_TABLE_HEADER_ROWS)
+        if hdr_container is not None:
+            for row_el in hdr_container.findall(_TABLE_ROW):
+                rows.append(self._read_row(row_el))
         for row_el in table_el.findall(_TABLE_ROW):
-            row = []
-            for cell_el in row_el:
-                if cell_el.tag not in (_TABLE_CELL, _TABLE_CELL_COV):
-                    continue
-                paragraphs = [
-                    self.get_text(p) for p in cell_el.findall(f".//{_PARAGRAPH}")
-                ]
-                row.append("\n".join(paragraphs))
-            rows.append(row)
+            rows.append(self._read_row(row_el))
         return rows
 
     def walk(self):

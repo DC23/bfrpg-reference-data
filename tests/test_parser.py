@@ -150,3 +150,34 @@ def test_get_text_spaces(parser):
     NS = "urn:oasis:names:tc:opendocument:xmlns:text:1.0"
     el = ET.fromstring(f'<p xmlns:text="{NS}">a<text:s text:c="3"/>b</p>')
     assert parser.get_text(el) == "a   b"
+
+
+# ---------------------------------------------------------------------------
+# table:table-header-rows inclusion
+# ---------------------------------------------------------------------------
+
+
+def test_land_vehicle_table_includes_header_row(walk_events):
+    """Table210 (land vehicles) uses table:table-header-rows; row 0 must be the header."""
+    for e in walk_events:
+        if e[0] == "table" and e[1] == "Table210":
+            row0 = e[2][0]
+            assert row0[0] == "Vehicle", (
+                f"Expected header row first, got data row starting with {row0[0]!r}. "
+                "table:table-header-rows is not being included in _read_table."
+            )
+            return
+    pytest.fail("Table210 (land vehicles) not found in walk output")
+
+
+def test_siege_engine_table_includes_header_row(walk_events):
+    """Table232 (siege engines) uses table:table-header-rows; row 0 must be the header."""
+    for e in walk_events:
+        if e[0] == "table" and e[1] == "Table232":
+            row0 = e[2][0]
+            assert row0[0] == "Weapon", (
+                f"Expected header row first, got data row starting with {row0[0]!r}. "
+                "table:table-header-rows is not being included in _read_table."
+            )
+            return
+    pytest.fail("Table232 (siege engines) not found in walk output")

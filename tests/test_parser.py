@@ -201,13 +201,15 @@ def test_get_text_runs_bold_span(parser):
         if "Backpack" in text and "maximum" in text:
             backpack_para = el
             break
-    assert backpack_para is not None, "Backpack description paragraph not found in content"
+    assert (
+        backpack_para is not None
+    ), "Backpack description paragraph not found in content"
     runs = parser.get_text_runs(backpack_para)
     bold_texts = [t for t, b in runs if b]
     assert bold_texts, f"No bold runs in Backpack paragraph; runs={runs}"
-    assert any("Backpack" in t for t in bold_texts), (
-        f"No bold run containing 'Backpack'; bold_texts={bold_texts}"
-    )
+    assert any(
+        "Backpack" in t for t in bold_texts
+    ), f"No bold run containing 'Backpack'; bold_texts={bold_texts}"
 
 
 def test_get_text_runs_bold_para(parser):

@@ -39,31 +39,32 @@ def test_fixture_spells(spells):
         spell = find_by_name(spells, name, "spell")
 
         if "reversible" in entry:
-            assert spell.get("reversible") == entry["reversible"], (
-                f"{name}: wrong reversible flag"
-            )
+            assert (
+                spell.get("reversible") == entry["reversible"]
+            ), f"{name}: wrong reversible flag"
 
         if "range" in entry:
-            assert spell.get("range") == entry["range"], (
-                f"{name}: wrong range: expected {entry['range']!r}, got {spell.get('range')!r}"
-            )
+            assert (
+                spell.get("range") == entry["range"]
+            ), f"{name}: wrong range: expected {entry['range']!r}, got {spell.get('range')!r}"
 
         if "duration" in entry:
-            assert spell.get("duration") == entry["duration"], (
-                f"{name}: wrong duration: expected {entry['duration']!r}, got {spell.get('duration')!r}"
-            )
+            assert (
+                spell.get("duration") == entry["duration"]
+            ), f"{name}: wrong duration: expected {entry['duration']!r}, got {spell.get('duration')!r}"
 
         if "classes" in entry:
             actual_classes = spell.get("classes", [])
             for exp_cls in entry["classes"]:
                 match = next(
                     (
-                        c for c in actual_classes
+                        c
+                        for c in actual_classes
                         if c.get("class") == exp_cls["class"]
                         and c.get("level") == exp_cls["level"]
                     ),
                     None,
                 )
-                assert match is not None, (
-                    f"{name}: class entry {exp_cls!r} not found in {actual_classes!r}"
-                )
+                assert (
+                    match is not None
+                ), f"{name}: class entry {exp_cls!r} not found in {actual_classes!r}"

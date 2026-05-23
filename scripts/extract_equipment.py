@@ -114,12 +114,14 @@ def _parse_missile_ranges(rows: list[list[str]]) -> list[dict]:
             continue
         # Header col 3 contains a newline: 'Long\n(-2)' — normalise for the key name,
         # preserve raw value in the dict.
-        items.append({
-            "weapon": row[0],
-            "short": row[1],
-            "medium": row[2],
-            "long": row[3],
-        })
+        items.append(
+            {
+                "weapon": row[0],
+                "short": row[1],
+                "medium": row[2],
+                "long": row[3],
+            }
+        )
     return items
 
 
@@ -170,17 +172,19 @@ def _parse_water_vehicles(rows: list[list[str]]) -> list[dict]:
     for row in rows[1:]:
         if len(row) < 9 or not row[0]:
             continue
-        items.append({
-            "name": row[0],
-            "size": row[1],
-            "cargo": row[2],
-            "crew": row[3],
-            "movement": row[4],
-            "maneuverability": row[5],
-            "miles_per_day": row[6],
-            "hardness_hp": row[7],
-            "cost": row[8],
-        })
+        items.append(
+            {
+                "name": row[0],
+                "size": row[1],
+                "cargo": row[2],
+                "crew": row[3],
+                "movement": row[4],
+                "maneuverability": row[5],
+                "miles_per_day": row[6],
+                "hardness_hp": row[7],
+                "cost": row[8],
+            }
+        )
     return items
 
 

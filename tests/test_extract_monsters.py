@@ -69,9 +69,7 @@ def test_fixture_monsters(monsters):
             assert "variants" in entity, f"{name}: expected variants"
             for vk, vfields in entry["variants"].items():
                 assert vk in entity["variants"], f"{name}: variant {vk!r} missing"
-                assert_fields(
-                    entity["variants"][vk], vfields, context=f"{name}.{vk}"
-                )
+                assert_fields(entity["variants"][vk], vfields, context=f"{name}.{vk}")
 
         if "age_categories" in entry:
             assert "age_categories" in entity, f"{name}: missing age_categories"
@@ -80,9 +78,7 @@ def test_fixture_monsters(monsters):
             )
 
 
-def _check_age_categories(
-    actual: list[dict], expected: list[dict], name: str
-) -> None:
+def _check_age_categories(actual: list[dict], expected: list[dict], name: str) -> None:
     actual_by_cat = {c["category"]: c for c in actual}
     for exp_cat in expected:
         cat_num = exp_cat["category"]
@@ -100,6 +96,6 @@ def _check_cat_fields(actual: dict, expected: dict[str, Any], context: str) -> N
             assert isinstance(act_val, dict), f"{context}: {key!r} should be a dict"
             assert_fields(act_val, exp_val, context=f"{context}.{key}")
         else:
-            assert act_val == exp_val, (
-                f"{context}: {key!r}: expected {exp_val!r}, got {act_val!r}"
-            )
+            assert (
+                act_val == exp_val
+            ), f"{context}: {key!r}: expected {exp_val!r}, got {act_val!r}"

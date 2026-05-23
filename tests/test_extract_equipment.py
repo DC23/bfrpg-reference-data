@@ -30,7 +30,9 @@ def test_fixture_equipment(equipment):
     for entry in load_fixture("equipment.yaml"):
         name = entry["name"]
         assert name in lookup, f"Gear item {name!r} not found in extracted equipment"
-        assert_fields(lookup[name], {k: v for k, v in entry.items() if k != "name"}, context=name)
+        assert_fields(
+            lookup[name], {k: v for k, v in entry.items() if k != "name"}, context=name
+        )
 
 
 def test_armour_count(equipment):
@@ -40,7 +42,14 @@ def test_armour_count(equipment):
 
 def test_weapon_categories(equipment):
     categories = [w["category"] for w in equipment["weapons"]]
-    for expected in ("Axes", "Bows", "Daggers", "Swords", "Hammers and Maces", "Other Weapons"):
+    for expected in (
+        "Axes",
+        "Bows",
+        "Daggers",
+        "Swords",
+        "Hammers and Maces",
+        "Other Weapons",
+    ):
         assert expected in categories, f"Category {expected!r} missing from weapons"
 
 
@@ -72,7 +81,9 @@ def test_fixture_weapons(equipment):
         name = entry["name"]
         assert name in lookup, f"Weapon {name!r} not found in extracted weapons"
         actual = lookup[name]
-        assert_fields(actual, {k: v for k, v in entry.items() if k != "name"}, context=name)
+        assert_fields(
+            actual, {k: v for k, v in entry.items() if k != "name"}, context=name
+        )
 
 
 # ---------------------------------------------------------------------------
@@ -89,7 +100,9 @@ def test_fixture_armour(equipment):
     for entry in load_fixture("armor.yaml"):
         name = entry["name"]
         assert name in lookup, f"Armour {name!r} not found"
-        assert_fields(lookup[name], {k: v for k, v in entry.items() if k != "name"}, context=name)
+        assert_fields(
+            lookup[name], {k: v for k, v in entry.items() if k != "name"}, context=name
+        )
 
 
 def test_fixture_shields(equipment):
@@ -97,7 +110,9 @@ def test_fixture_shields(equipment):
     for entry in load_fixture("shields.yaml"):
         name = entry["name"]
         assert name in lookup, f"Shield {name!r} not found in armour output"
-        assert_fields(lookup[name], {k: v for k, v in entry.items() if k != "name"}, context=name)
+        assert_fields(
+            lookup[name], {k: v for k, v in entry.items() if k != "name"}, context=name
+        )
 
 
 # ---------------------------------------------------------------------------
@@ -116,12 +131,20 @@ def test_fixture_vehicles(equipment):
     for entry in fixture.get("land", []):
         name = entry["name"]
         assert name in land_by_name, f"Land vehicle {name!r} not found"
-        assert_fields(land_by_name[name], {k: v for k, v in entry.items() if k != "name"}, context=name)
+        assert_fields(
+            land_by_name[name],
+            {k: v for k, v in entry.items() if k != "name"},
+            context=name,
+        )
 
     for entry in fixture.get("water", []):
         name = entry["name"]
         assert name in water_by_name, f"Water vehicle {name!r} not found"
-        assert_fields(water_by_name[name], {k: v for k, v in entry.items() if k != "name"}, context=name)
+        assert_fields(
+            water_by_name[name],
+            {k: v for k, v in entry.items() if k != "name"},
+            context=name,
+        )
 
 
 # ---------------------------------------------------------------------------
@@ -132,14 +155,14 @@ def test_fixture_vehicles(equipment):
 def test_gear_descriptions_enriched(equipment):
     """Enricher should attach descriptions to most gear items."""
     items_with_desc = [i for i in equipment["equipment"] if "description" in i]
-    assert len(items_with_desc) >= 10, (
-        f"Expected at least 10 gear descriptions; got {len(items_with_desc)}"
-    )
+    assert (
+        len(items_with_desc) >= 10
+    ), f"Expected at least 10 gear descriptions; got {len(items_with_desc)}"
 
 
 def test_siege_descriptions_enriched(equipment):
     """Enricher should attach descriptions to most siege engine items."""
     with_desc = [i for i in equipment["siege_engines"] if "description" in i]
-    assert len(with_desc) >= 4, (
-        f"Expected at least 4 siege engine descriptions; got {len(with_desc)}"
-    )
+    assert (
+        len(with_desc) >= 4
+    ), f"Expected at least 4 siege engine descriptions; got {len(with_desc)}"

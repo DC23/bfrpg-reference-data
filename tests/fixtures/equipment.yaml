@@ -24,10 +24,11 @@
   description: "A Map or Scroll Case is a tubular oiled leather case used to carry maps, scrolls, or other paper items.  The case will have a water-resistant (but not waterproof) cap which slides over the end, and a loop to allow the case to be hung from a belt or bandolier.  A standard scroll case can hold up to 10 sheets of paper, or a single scroll of up to seven spells."
 
 # Single-asterisk weight (negligible — counts as 0 for encumbrance)
+# Also a good test of the description enhancer, since it needs to find the holy water description in a completely different part of the text
 - name: Holy Water, per vial
   price: "10 gp"
   weight: "*"
-  description: "Holy water is harmful to undead creatures.  A character may throw a flask of holy water as a grenade-like missile, which will break and release the contents if thrown against the body of a corporeal creature. To use it against an incorporeal creature it must be opened and poured or splashed onto the target, generally requiring the attacker to be directly adjacent to it.  /nEach flask of holy water can inflict 1d8 points of damage to such a monster.  In addition, each additional undead monster within 5 feet of the point of impact receives 1d6 points of damage from the splash.  Holy water is only effective for one round."
+  description: "Holy water is harmful to undead creatures.  A character may throw a flask of holy water as a grenade-like missile, which will break and release the contents if thrown against the body of a corporeal creature. To use it against an incorporeal creature it must be opened and poured or splashed onto the target, generally requiring the attacker to be directly adjacent to it.\n\nEach flask of holy water can inflict 1d8 points of damage to such a monster.  In addition, each additional undead monster within 5 feet of the point of impact receives 1d6 points of damage from the splash.  Holy water is only effective for one round."
 
 - name: Mirror, small metal
   price: "7 gp"

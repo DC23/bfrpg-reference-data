@@ -23,6 +23,14 @@ def test_gear_count(equipment):
     assert len(equipment["equipment"]) == 46
 
 
+def test_fixture_equipment(equipment):
+    lookup = {item["name"]: item for item in equipment["equipment"]}
+    for entry in load_fixture("equipment.yaml"):
+        name = entry["name"]
+        assert name in lookup, f"Gear item {name!r} not found in extracted equipment"
+        assert_fields(lookup[name], {k: v for k, v in entry.items() if k != "name"}, context=name)
+
+
 def test_armour_count(equipment):
     # No Armor, Leather, Chain Mail, Plate Mail, Shield
     assert len(equipment["armour"]) == 5

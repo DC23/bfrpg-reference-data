@@ -291,9 +291,12 @@ def extract_equipment(events: list[tuple]) -> dict[str, Any]:
 
 
 def main() -> None:
+    from scripts.enrich_equipment_descriptions import enrich_descriptions
+
     parser = OdtParser(ODT_PATH)
     events = list(parser.walk())
     data = extract_equipment(events)
+    enrich_descriptions(data, parser)
 
     DATA_DIR.mkdir(parents=True, exist_ok=True)
 

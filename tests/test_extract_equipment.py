@@ -4,13 +4,15 @@ from __future__ import annotations
 
 import pytest
 
-from conftest import assert_fields, load_fixture
+from conftest import ODT_PATH, assert_fields, load_fixture
+from scripts.enrich_equipment_descriptions import enrich_descriptions
 from scripts.extract_equipment import extract_equipment
 
 
 @pytest.fixture(scope="session")
-def equipment(walk_events):
-    return extract_equipment(list(walk_events))
+def equipment(walk_events, parser):
+    data = extract_equipment(list(walk_events))
+    return enrich_descriptions(data, parser)
 
 
 # ---------------------------------------------------------------------------
@@ -120,3 +122,24 @@ def test_fixture_vehicles(equipment):
         name = entry["name"]
         assert name in water_by_name, f"Water vehicle {name!r} not found"
         assert_fields(water_by_name[name], {k: v for k, v in entry.items() if k != "name"}, context=name)
+
+
+# ---------------------------------------------------------------------------
+# Description enrichment sanity checks
+# ---------------------------------------------------------------------------
+
+
+def test_gear_descriptions_enriched(equipment):
+    """Enricher should attach descriptions to most gear items."""
+    items_with_desc = [i for i in equipment["equipment"] if "description" in i]
+    assert len(items_with_desc) >= 10, (
+        f"Expected at least 10 gear descriptions; got {len(items_with_desc)}"
+    )
+
+
+def test_siege_descriptions_enriched(equipment):
+    """Enricher should attach descriptions to most siege engine items."""
+    with_desc = [i for i in equipment["siege_engines"] if "description" in i]
+    assert len(with_desc) >= 4, (
+        f"Expected at least 4 siege engine descriptions; got {len(with_desc)}"
+    )

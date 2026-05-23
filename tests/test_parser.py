@@ -181,3 +181,52 @@ def test_siege_engine_table_includes_header_row(walk_events):
             )
             return
     pytest.fail("Table232 (siege engines) not found in walk output")
+
+
+# ---------------------------------------------------------------------------
+# get_text_runs — bold detection
+# ---------------------------------------------------------------------------
+
+
+def test_get_text_runs_bold_span(parser):
+    """Pattern A: item name in explicit bold character span.
+
+    Backpack paragraph: paragraph style is non-bold; name is in a bold span (T15).
+    """
+    from scripts.odt_parser import _PARAGRAPH
+
+    backpack_para = None
+    for el in parser._content.iter(_PARAGRAPH):
+        text = OdtParser.get_text(el)
+        if "Backpack" in text and "maximum" in text:
+            backpack_para = el
+            break
+    assert backpack_para is not None, "Backpack description paragraph not found in content"
+    runs = parser.get_text_runs(backpack_para)
+    bold_texts = [t for t, b in runs if b]
+    assert bold_texts, f"No bold runs in Backpack paragraph; runs={runs}"
+    assert any("Backpack" in t for t in bold_texts), (
+        f"No bold run containing 'Backpack'; bold_texts={bold_texts}"
+    )
+
+
+def test_get_text_runs_bold_para(parser):
+    """Pattern B: paragraph style is bold; item name is bare text.
+
+    Chalk paragraph: paragraph auto-style (P67) sets bold; name is bare text;
+    remainder is in an explicit normal span (T115).
+    """
+    from scripts.odt_parser import _PARAGRAPH
+
+    chalk_para = None
+    for el in parser._content.iter(_PARAGRAPH):
+        text = OdtParser.get_text(el)
+        if text.startswith("Chalk") and "useful" in text:
+            chalk_para = el
+            break
+    assert chalk_para is not None, "Chalk description paragraph not found in content"
+    runs = parser.get_text_runs(chalk_para)
+    assert runs, "No runs found in Chalk paragraph"
+    first_text, first_bold = runs[0]
+    assert first_bold, f"Expected first run to be bold; runs={runs}"
+    assert "Chalk" in first_text, f"Expected 'Chalk' in first run; got {first_text!r}"

@@ -14,6 +14,7 @@ _NS = {
     "style": "urn:oasis:names:tc:opendocument:xmlns:style:1.0",
     "text": "urn:oasis:names:tc:opendocument:xmlns:text:1.0",
     "table": "urn:oasis:names:tc:opendocument:xmlns:table:1.0",
+    "fo": "urn:oasis:names:tc:opendocument:xmlns:xsl-fo-compatible:1.0",
 }
 
 
@@ -42,6 +43,13 @@ _LINE_BREAK = _xml_tag("text", "line-break")
 _SPACES = _xml_tag("text", "s")  # run of spaces; count in text:c attribute
 _TAB = _xml_tag("text", "tab")
 
+# Character spans
+_SPAN = _xml_tag("text", "span")
+
+# Bold detection: text-properties element and fo:font-weight attribute
+_TEXT_PROPS = _xml_tag("style", "text-properties")
+_FO_FONT_WEIGHT = _xml_tag("fo", "font-weight")
+
 # Attribute names
 _ATTR_STYLE_NAME = _xml_tag("style", "name")
 _ATTR_STYLE_PARENT = _xml_tag("style", "parent-style-name")
@@ -57,6 +65,7 @@ class OdtParser:
             styles_root = ET.fromstring(z.read("styles.xml"))
         self._auto_styles: set[str] = set()
         self._parents: dict[str, str] = {}
+        self._style_elements: dict[str, ET.Element] = {}
         self._build_style_map(styles_root)
         self._resolve_cache: dict[str, str] = {}
 
@@ -69,16 +78,20 @@ class OdtParser:
                 parent = s.get(_ATTR_STYLE_PARENT)
                 if name:
                     self._auto_styles.add(name)
+                    self._style_elements[name] = s
                     if parent:
                         self._parents[name] = parent
 
-        # Named styles from styles.xml — collect parent chains only;
+        # Named styles from styles.xml — collect parent chains and elements;
         # these are the semantic roots so do NOT add them to _auto_styles
         for s in styles_root.iter(_xml_tag("style", "style")):
             name = s.get(_ATTR_STYLE_NAME)
             parent = s.get(_ATTR_STYLE_PARENT)
-            if name and parent and name not in self._parents:
-                self._parents[name] = parent
+            if name:
+                if name not in self._style_elements:
+                    self._style_elements[name] = s
+                if parent and name not in self._parents:
+                    self._parents[name] = parent
 
     def resolve_style(self, style_name: str) -> str:
         """Walk parent chain; return the first non-automatic ancestor."""
@@ -96,6 +109,84 @@ class OdtParser:
             current = parent
         self._resolve_cache[style_name] = current
         return current
+
+    def _is_bold_style(self, style_name: str) -> bool:
+        """Walk the style parent chain; return True if any level sets fo:font-weight=bold."""
+        seen: set[str] = set()
+        current: str | None = style_name
+        while current:
+            if current in seen:
+                break
+            seen.add(current)
+            el = self._style_elements.get(current)
+            if el is not None:
+                tp = el.find(_TEXT_PROPS)
+                if tp is not None:
+                    fw = tp.get(_FO_FONT_WEIGHT)
+                    if fw == "bold":
+                        return True
+                    if fw == "normal":
+                        return False
+            current = self._parents.get(current)
+        return False
+
+    def _char_bold(self, char_style: str, para_is_bold: bool) -> bool:
+        """Resolve bold state for a character span.
+
+        Explicit bold/normal anywhere in the char style chain wins; if nothing
+        is set, the paragraph bold state is inherited.
+        """
+        seen: set[str] = set()
+        current: str | None = char_style
+        while current:
+            if current in seen:
+                break
+            seen.add(current)
+            el = self._style_elements.get(current)
+            if el is not None:
+                tp = el.find(_TEXT_PROPS)
+                if tp is not None:
+                    fw = tp.get(_FO_FONT_WEIGHT)
+                    if fw == "bold":
+                        return True
+                    if fw == "normal":
+                        return False
+            current = self._parents.get(current)
+        return para_is_bold
+
+    def get_text_runs(self, para_el: ET.Element) -> list[tuple[str, bool]]:
+        """Return (text, is_bold) runs for a paragraph element.
+
+        Bare text nodes inherit the paragraph style's bold state. Spans resolve
+        their own bold state via _char_bold(), inheriting from the paragraph
+        if no explicit weight is set.
+        """
+        raw_para_style = para_el.get(_ATTR_TEXT_STYLE, "")
+        para_is_bold = self._is_bold_style(raw_para_style)
+        runs: list[tuple[str, bool]] = []
+
+        def collect(el: ET.Element, is_bold: bool) -> None:
+            if el.text:
+                runs.append((el.text, is_bold))
+            for child in el:
+                if child.tag == _SPAN:
+                    char_style = child.get(_ATTR_TEXT_STYLE, "")
+                    child_bold = self._char_bold(char_style, is_bold)
+                    collect(child, child_bold)
+                elif child.tag == _LINE_BREAK:
+                    runs.append(("\n", is_bold))
+                elif child.tag == _SPACES:
+                    count = int(child.get(_ATTR_SPACE_COUNT, "1"))
+                    runs.append((" " * count, is_bold))
+                elif child.tag == _TAB:
+                    runs.append(("\t", is_bold))
+                else:
+                    collect(child, is_bold)
+                if child.tail:
+                    runs.append((child.tail, is_bold))
+
+        collect(para_el, para_is_bold)
+        return runs
 
     @staticmethod
     def get_text(element: ET.Element) -> str:

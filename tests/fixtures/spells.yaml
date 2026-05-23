@@ -1,0 +1,79 @@
+# Spell test fixtures for extract_spells.py.
+# Each entry tests one or more structural features. Fields omitted from an
+# entry are not tested — fixture-subset matching, same as monster fixtures.
+# All string values match raw document text; spell levels are integers.
+
+# Standard single-class spell
+- name: Charm Person
+  classes:
+    - class: Magic-User
+      level: 1
+  range: "30'"
+  duration: "special"
+
+# Reversible single-class spell
+# Source has asterisk suffix on name; extractor strips it and sets reversible: true
+- name: Bless
+  reversible: true
+  classes:
+    - class: Cleric
+      level: 2
+  range: "50' radius"
+  duration: "1 minute/level"
+
+# Dual-class spell (appears in both Cleric and Magic-User spell lists)
+- name: Animate Dead
+  classes:
+    - class: Cleric
+      level: 4
+    - class: Magic-User
+      level: 5
+  range: "30'"
+  duration: "special"
+
+# Dual-class reversible spell
+- name: Light
+  reversible: true
+  classes:
+    - class: Cleric
+      level: 1
+    - class: Magic-User
+      level: 1
+  range: "120'"
+  duration: "6 turns + 1/level"
+
+# Spell with embedded roll table
+- name: Confusion
+  classes:
+    - class: Magic-User
+      level: 4
+  range: "280'+10'/ level"
+  duration: "2 rounds+1/level"
+
+# Spell with embedded roll table
+- name: Reincarnate
+  classes:
+    - class: Magic-User
+      level: 6
+  range: "touch"
+  duration: "instantaneous"
+
+# Spell with embedded roll table
+# Note: memory had "Teleportation" — actual spell name in source is "Teleport"
+- name: Teleport
+  classes:
+    - class: Magic-User
+      level: 5
+  range: "self"
+  duration: "instantaneous"
+
+# Dual-class reversible spell with embedded list
+- name: Remove Curse
+  reversible: true
+  classes:
+    - class: Cleric
+      level: 3
+    - class: Magic-User
+      level: 4
+  range: "30'"
+  duration: "instantaneous"

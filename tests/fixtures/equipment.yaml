@@ -2,14 +2,17 @@
 - name: Bit and bridle
   price: "15 sp"
   weight: "3"
+  description: null
 
 - name: Iron Spikes, 12
   price: "1 gp"
   weight: "1"
+  description: "Iron Spikes are useful for spiking doors closed (or spiking them open) and may be used as crude pitons in appropriate situations."
 
 - name: Rope, Hemp (per 50 ft.)
   price: "1 gp"
   weight: "5"
+  description: "Hemp Rope is ½ inch in diameter and has a breaking strength of 1,600 pounds.  Safe working load for a rope is normally one-quarter of the breaking strength. One or more knots in a rope cut the breaking strength in half.  This does not affect the safe working load, because knots are figured into the listed one-quarter ratio."
 
 # Fractional weight (Unicode ½, not "0.5")
 - name: Ink, per jar
@@ -19,11 +22,13 @@
 - name: Map or scroll case
   price: "1 gp"
   weight: "½"
+  description: "A Map or Scroll Case is a tubular oiled leather case used to carry maps, scrolls, or other paper items.  The case will have a water-resistant (but not waterproof) cap which slides over the end, and a loop to allow the case to be hung from a belt or bandolier.  A standard scroll case can hold up to 10 sheets of paper, or a single scroll of up to seven spells."
 
 # Single-asterisk weight (negligible — counts as 0 for encumbrance)
 - name: Holy Water, per vial
   price: "10 gp"
   weight: "*"
+  description: "Holy water is harmful to undead creatures.  A character may throw a flask of holy water as a grenade-like missile, which will break and release the contents if thrown against the body of a corporeal creature. To use it against an incorporeal creature it must be opened and poured or splashed onto the target, generally requiring the attacker to be directly adjacent to it.  /nEach flask of holy water can inflict 1d8 points of damage to such a monster.  In addition, each additional undead monster within 5 feet of the point of impact receives 1d6 points of damage from the splash.  Holy water is only effective for one round."
 
 - name: Mirror, small metal
   price: "7 gp"
@@ -37,3 +42,25 @@
 - name: Whistle
   price: "1 gp"
   weight: "**"
+
+# The three lanterns are a good test. While they have separate table entries, they have descriptive text embedded in a single paragraph.
+- name: Lantern
+  price: "5 gp"
+  weight: "2"
+  description: "A Lantern will provide light covering a 30' radius; dim light will extend about 20' further. A lantern will consume a flask of oil in 18+1d6 turns."
+
+- name: Lantern, Bullseye
+  price: "14 gp"
+  weight: "3"
+  description: "A Bullseye Lantern projects a cone of light 30' long and 30' wide at the widest point, with dim light extending an additional 20' beyond that point. This type of lantern is generally hooded."
+
+- name: Lantern, Hooded
+  price: "8 gp"
+  weight: "2"
+  description: "A Hooded Lantern allows the light to be hidden or revealed as the user pleases; in all other ways it performs as an ordinary lantern."
+
+# Tinderbox, flint and steel are a single item. It's a good test because the description contains two bolded terms, "Tinderbox" and "flint and steel", which might trip the implementation
+- name: Tinderbox, flint and steel
+  price: "3 gp"
+  weight: "1"
+  description: "A Tinderbox is generally purchased with a flint and steel; the flint, a piece of hard rock, is struck vigorously against a C-shaped piece of high-carbon steel. When done correctly, hot sparks will fly from the flint and steel into the tinder, hopefully starting a fire.  The best tinder is a dried piece of prepared tinder fungus, carried in the tinderbox to keep it dry; char cloth, hemp rope, or even very dry grass can substitute if prepared tinder fungus is not available.  The time required to start a fire should be determined by the GM according to the prevailing conditions; under ideal conditions, starting a fire with a flint, steel and tinder takes about a turn."

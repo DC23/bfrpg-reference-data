@@ -1,0 +1,19 @@
+- name: No Armor
+  price: "0 gp"
+  weight: "0"
+  ac: "11"
+
+- name: Leather Armor
+  price: "20 gp"
+  weight: "15"
+  ac: "13"
+
+- name: Chain Mail
+  price: "60 gp"
+  weight: "40"
+  ac: "15"
+
+- name: Plate Mail
+  price: "300 gp"
+  weight: "50"
+  ac: "17"

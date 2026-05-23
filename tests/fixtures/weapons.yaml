@@ -1,0 +1,109 @@
+# Flat list: one entry per item in weapons.json.
+# Sub-items carry a parent field. Silver† weapons have silver: true.
+
+- name: Hand Axe
+  category: Axes
+  price: "4 gp"
+  size: "S"
+  weight: "5"
+  damage: "1d6"
+
+- name: Great Axe
+  category: Axes
+  price: "14 gp"
+  size: "L"
+  weight: "15"
+  damage: "1d10"
+
+# Bow with no inline damage (ammo rows carry the damage)
+- name: Shortbow
+  category: Bows
+  price: "25 gp"
+  size: "M"
+  weight: "2"
+
+- name: Shortbow Arrow
+  category: Bows
+  parent: Shortbow
+  price: "1 sp"
+  weight: "*"
+  damage: "1d6"
+
+# Silver weapon: † stripped from name, silver: true added
+- name: Silver Shortbow Arrow
+  category: Bows
+  parent: Shortbow
+  price: "2 gp"
+  weight: "*"
+  damage: "1d6"
+  silver: true
+
+- name: Heavy Crossbow
+  category: Bows
+  price: "50 gp"
+  size: "L"
+  weight: "14"
+
+- name: Heavy Quarrel
+  category: Bows
+  parent: Heavy Crossbow
+  price: "4 sp"
+  weight: "*"
+  damage: "1d8"
+
+- name: Silver Dagger
+  category: Daggers
+  price: "25 gp"
+  size: "S"
+  weight: "1"
+  damage: "1d4"
+  silver: true
+
+- name: Two-Handed Sword
+  category: Swords
+  price: "18 gp"
+  size: "L"
+  weight: "10"
+  damage: "1d10"
+
+- name: Maul
+  category: Hammers and Maces
+  price: "10 gp"
+  size: "L"
+  weight: "16"
+  damage: "1d10"
+
+# Spear: no inline damage; use-mode sub-items carry damage
+- name: Spear
+  category: Other Weapons
+  price: "5 gp"
+  size: "M"
+  weight: "5"
+
+- name: Thrown (one handed)
+  category: Other Weapons
+  parent: Spear
+  damage: "1d6"
+
+- name: Melee (one handed)
+  category: Other Weapons
+  parent: Spear
+  damage: "1d6"
+
+- name: Melee (two handed)
+  category: Other Weapons
+  parent: Spear
+  damage: "1d8"
+
+- name: Sling
+  category: Other Weapons
+  price: "1 gp"
+  size: "S"
+  weight: "*"
+
+- name: Stone
+  category: Other Weapons
+  parent: Sling
+  price: "n/a"
+  weight: "*"
+  damage: "1d3"

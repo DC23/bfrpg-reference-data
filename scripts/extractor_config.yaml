@@ -6,3 +6,11 @@
 split_tables:
   - entry: "Beasts of Burden"
     reason: "Editorial grouping of unrelated creatures; each beast is an independent entry"
+
+# Items whose description appears in a section other than their price table.
+# The extractor stores these without a description field; a separate pass or
+# manual curation is needed to source the description.
+remote_descriptions:
+  - name: "Holy Water"
+    description_section: "Encounter"
+    reason: "Gear table gives price/weight only; description is in Part 5"

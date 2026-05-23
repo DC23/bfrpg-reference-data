@@ -1,0 +1,38 @@
+land:
+  - name: Chariot
+    length_x_width: "15' x 6'"
+    weight: "300"
+    cargo: "750 lbs"
+    movement: "60' (10')"
+    hardness_hp: "10 / 10"
+    cost: "400"
+
+  - name: Wagon
+    length_x_width: "35' x 8'"
+    weight: "2,000"
+    cargo: "4,000 lbs"
+    movement: "20' (15')"
+    hardness_hp: "6 / 16"
+    cost: "500"
+
+water:
+  - name: Canoe
+    size: "15' x 4'"
+    cargo: "½  ton"
+    crew: "1"
+    movement: "40'"
+    maneuverability: "(5')"
+    miles_per_day: "30"
+    hardness_hp: "4 / 4"
+    cost: "50"
+
+  # Galley with split miles_per_day (sail/oar) to verify slash values preserved
+  - name: Galley, Large
+    size: "120' x 20'"
+    cargo: "375 tons"
+    crew: "160"
+    movement: "30'"
+    maneuverability: "(25')"
+    miles_per_day: "42 / 24"
+    hardness_hp: "10 / 120"
+    cost: "30,000"

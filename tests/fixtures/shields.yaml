@@ -1,0 +1,7 @@
+# Shield appears in the same ODT table as armour; extracted into armour.json.
+# This fixture tests the shield entry via the armour lookup.
+
+- name: Shield
+  price: "7 gp"
+  weight: "5"
+  ac: "+1"

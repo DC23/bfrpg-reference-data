@@ -58,8 +58,11 @@ def test_fixture_monsters(monsters):
         name = entry["name"]
         entity = find_by_name(monsters, name, "monster")
 
-        top_level = {k: v for k, v in entry.items()
-                     if k not in ("name", "stats", "variants", "age_categories")}
+        top_level = {
+            k: v
+            for k, v in entry.items()
+            if k not in ("name", "stats", "variants", "age_categories")
+        }
         assert_fields(entity, top_level, context=name)
 
         if "stats" in entry:

@@ -6,6 +6,14 @@
 split_tables:
   - entry: "Beasts of Burden"
     reason: "Editorial grouping of unrelated creatures; each beast is an independent entry"
+    entity_descriptions:
+      Camel: "Camels"
+      Donkey: "Donkeys"
+      "Horse (Draft)": "Draft Horses"
+      "Horse (Riding)": "Riding Horses"
+      "Horse (War)": "War Horses"
+      Mule: "Mules"
+      Pony: "A Pony"
 
 # Bold hints in description paragraphs that are in-text mentions, not separate
 # item names. These are excluded from item-name matching during description

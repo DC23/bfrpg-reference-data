@@ -56,8 +56,8 @@ def load_config(path: Path = CONFIG_PATH) -> dict:
         return yaml.safe_load(f) or {}
 
 
-def get_split_entries(config: dict) -> set[str]:
-    return {item["entry"] for item in config.get("split_tables", [])}
+def get_split_config(config: dict) -> dict[str, dict]:
+    return {item["entry"]: item for item in config.get("split_tables", [])}
 
 
 # ---------------------------------------------------------------------------
@@ -228,10 +228,12 @@ def _find_tables(
 def process_block(
     name: str,
     events: list[tuple],
-    split_entries: set[str],
+    split_config: dict[str, dict],
 ) -> list[dict]:
     if name in _GROUP_INTROS:
-        description = [normalise_spaces(e[2]) for e in events if e[0] == "p" and e[2].strip()]
+        description = [
+            normalise_spaces(e[2]) for e in events if e[0] == "p" and e[2].strip()
+        ]
         entry: dict[str, Any] = {
             "name": name,
             "type": "group_intro",
@@ -242,7 +244,9 @@ def process_block(
         return [entry]
 
     tables = _find_tables(events)
-    description = [normalise_spaces(e[2]) for e in events if e[0] == "p" and e[2].strip()]
+    description = [
+        normalise_spaces(e[2]) for e in events if e[0] == "p" and e[2].strip()
+    ]
 
     if not tables or not is_stat_table(tables[0][0]):
         entry = {"name": name, "type": "group_intro"}
@@ -256,11 +260,27 @@ def process_block(
         # Multi-entity
         variant_keys, raw_name_for, variants = parse_multi_entity_stats(first_rows)
 
-        if name in split_entries:
-            return [
-                {"name": raw_name_for[vk], "type": "monster", "stats": variants[vk]}
-                for vk in variant_keys
-            ]
+        if name in split_config:
+            entity_desc = split_config[name].get("entity_descriptions", {})
+            prefix_to_name = {v: k for k, v in entity_desc.items()}
+            desc_for: dict[str, list[str]] = {}
+            for para in description:
+                for prefix, entity_name in prefix_to_name.items():
+                    if para.startswith(prefix):
+                        desc_for.setdefault(entity_name, []).append(para)
+                        break
+            result = []
+            for vk in variant_keys:
+                display = raw_name_for[vk]
+                e: dict[str, Any] = {
+                    "name": display,
+                    "type": "monster",
+                    "stats": variants[vk],
+                }
+                if display in desc_for:
+                    e["description"] = desc_for[display]
+                result.append(e)
+            return result
 
         entry = {"name": name, "type": "monster", "variants": variants}
         if description:
@@ -298,10 +318,10 @@ def extract_monsters(
     """Return {entity_name: entity_dict} for all monster entries."""
     if config is None:
         config = {}
-    split_entries = get_split_entries(config)
+    split_cfg = get_split_config(config)
     results: dict[str, dict] = {}
     for name, block_events in _collect_blocks(events):
-        for entity in process_block(name, block_events, split_entries):
+        for entity in process_block(name, block_events, split_cfg):
             results[entity["name"]] = entity
     return results
 

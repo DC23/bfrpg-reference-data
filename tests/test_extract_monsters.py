@@ -58,8 +58,9 @@ def test_fixture_monsters(monsters):
         name = entry["name"]
         entity = find_by_name(monsters, name, "monster")
 
-        if "group" in entry:
-            assert entity.get("group") == entry["group"], f"{name}: wrong group"
+        top_level = {k: v for k, v in entry.items()
+                     if k not in ("name", "stats", "variants", "age_categories")}
+        assert_fields(entity, top_level, context=name)
 
         if "stats" in entry:
             assert "stats" in entity, f"{name}: expected top-level stats"

@@ -12,7 +12,7 @@ from typing import Any
 
 import yaml
 
-from scripts.odt_parser import OdtParser
+from scripts.odt_parser import OdtParser, normalise_spaces
 
 ROOT = Path(__file__).parent.parent
 ODT_PATH = ROOT / "data" / "Basic-Fantasy-RPG-Rules-r142.odt"
@@ -231,7 +231,7 @@ def process_block(
     split_entries: set[str],
 ) -> list[dict]:
     if name in _GROUP_INTROS:
-        description = [e[2] for e in events if e[0] == "p" and e[2].strip()]
+        description = [normalise_spaces(e[2]) for e in events if e[0] == "p" and e[2].strip()]
         entry: dict[str, Any] = {
             "name": name,
             "type": "group_intro",
@@ -242,7 +242,7 @@ def process_block(
         return [entry]
 
     tables = _find_tables(events)
-    description = [e[2] for e in events if e[0] == "p" and e[2].strip()]
+    description = [normalise_spaces(e[2]) for e in events if e[0] == "p" and e[2].strip()]
 
     if not tables or not is_stat_table(tables[0][0]):
         entry = {"name": name, "type": "group_intro"}

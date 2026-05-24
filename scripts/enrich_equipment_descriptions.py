@@ -67,6 +67,11 @@ def _normalise_desc(raw: str) -> str:
     return normalise_spaces(raw.replace("\n", " "))
 
 
+def _to_desc_list(text: str) -> list[str]:
+    """Split on paragraph breaks and return a list of normalised strings."""
+    return [normalise_spaces(p.strip()) for p in text.split("\n\n") if p.strip()]
+
+
 def _segment_runs(
     runs: list[tuple[str, bool]],
     ignore: set[str],
@@ -204,13 +209,13 @@ def enrich_descriptions(data: dict, parser: OdtParser) -> dict:
     for hint, description in _collect_gear_descriptions(parser, ignore):
         for item in _match_items(hint, gear_items):
             if "description" not in item:
-                item["description"] = description
+                item["description"] = _to_desc_list(description)
 
     siege_items = data.get("siege_engines", [])
     for name, description in _collect_siege_descriptions(parser):
         for item in _match_items(name, siege_items):
             if "description" not in item:
-                item["description"] = description
+                item["description"] = _to_desc_list(description)
 
     # Config overrides: remote_descriptions entries with description_text always win.
     for entry in cfg.get("remote_descriptions", []):
@@ -218,6 +223,6 @@ def enrich_descriptions(data: dict, parser: OdtParser) -> dict:
         if not desc_text:
             continue
         for item in _match_items(entry["name"], gear_items):
-            item["description"] = desc_text
+            item["description"] = _to_desc_list(desc_text)
 
     return data

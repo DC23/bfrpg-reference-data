@@ -1,4 +1,4 @@
-"""Extract spell data from BFRPG ODT source to per-spell JSON files.
+"""Extract spell data from BFRPG ODT source to a single collated JSON file.
 
 Run: python -m scripts.extract_spells
 """
@@ -14,7 +14,7 @@ from scripts.odt_parser import OdtParser, normalise_spaces
 
 ROOT = Path(__file__).parent.parent
 ODT_PATH = ROOT / "data" / "Basic-Fantasy-RPG-Rules-r142.odt"
-DATA_DIR = ROOT / "data" / "spells"
+DATA_DIR = ROOT / "data"
 
 _SPELL_HEADING = "SpellHeading"
 _SPELL_MID = "SpellMidHeading"
@@ -196,23 +196,17 @@ def extract_spells(events: list[tuple]) -> dict[str, dict]:
 # ---------------------------------------------------------------------------
 
 
-def _make_slug(name: str) -> str:
-    clean = re.sub(r"[^\w\s-]", "", name.lower())
-    return re.sub(r"[\s_]+", "-", clean).strip("-")
-
-
 def main() -> None:
     parser = OdtParser(ODT_PATH)
     events = list(parser.walk())
     spells = extract_spells(events)
 
     DATA_DIR.mkdir(parents=True, exist_ok=True)
-    for name, spell in spells.items():
-        filename = f"{_make_slug(name)}.json"
-        with open(DATA_DIR / filename, "w", encoding="utf-8") as f:
-            json.dump(spell, f, indent=2, ensure_ascii=False)
+    out = DATA_DIR / "spells.json"
+    with open(out, "w", encoding="utf-8") as f:
+        json.dump(spells, f, indent=2, ensure_ascii=False)
 
-    print(f"Wrote {len(spells)} spells to {DATA_DIR}")
+    print(f"Wrote {len(spells)} spells to {out}")
 
 
 if __name__ == "__main__":

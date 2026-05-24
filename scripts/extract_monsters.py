@@ -1,4 +1,4 @@
-"""Extract monster data from BFRPG ODT source to per-entity JSON files.
+"""Extract monster data from BFRPG ODT source to a single collated JSON file.
 
 Run: python -m scripts.extract_monsters
 """
@@ -17,7 +17,7 @@ from scripts.odt_parser import OdtParser
 ROOT = Path(__file__).parent.parent
 ODT_PATH = ROOT / "data" / "Basic-Fantasy-RPG-Rules-r142.odt"
 CONFIG_PATH = ROOT / "scripts" / "extractor_config.yaml"
-DATA_DIR = ROOT / "data" / "monsters"
+DATA_DIR = ROOT / "data"
 
 # En-dash and em-dash — both appear in shared-value decorators in the source
 _DASHES = "–—"
@@ -42,11 +42,6 @@ def make_slug(name: str) -> str:
     clean = re.sub(r"[()]", "", name)
     clean = re.sub(r"[,\s]+", "-", clean.strip())
     return re.sub(r"-+", "-", clean).strip("-").lower()
-
-
-def make_filename(name: str, is_group_intro: bool = False) -> str:
-    suffix = "-general" if is_group_intro else ""
-    return f"{make_slug(name)}{suffix}.json"
 
 
 # ---------------------------------------------------------------------------
@@ -323,13 +318,11 @@ def main() -> None:
     monsters = extract_monsters(events, config)
 
     DATA_DIR.mkdir(parents=True, exist_ok=True)
-    for name, entity in monsters.items():
-        is_intro = entity.get("type") == "group_intro"
-        filename = make_filename(name, is_group_intro=is_intro)
-        with open(DATA_DIR / filename, "w", encoding="utf-8") as f:
-            json.dump(entity, f, indent=2, ensure_ascii=False)
+    out = DATA_DIR / "monsters.json"
+    with open(out, "w", encoding="utf-8") as f:
+        json.dump(monsters, f, indent=2, ensure_ascii=False)
 
-    print(f"Wrote {len(monsters)} entries to {DATA_DIR}")
+    print(f"Wrote {len(monsters)} entries to {out}")
 
 
 if __name__ == "__main__":

@@ -7,6 +7,7 @@
   target: "Cattle (including Aurochs and Bison)"
 
 - name: Manticore
+  type: "monster"
   stats:
     armor_class: "18"
     hit_dice: "6+1*"
@@ -20,6 +21,7 @@
     xp: "555"
 
 - name: Troll (and Trollwife)
+  type: "monster"
   variants:
     troll:
       armor_class: "16"
@@ -42,6 +44,7 @@
       xp: "735"
 
 - name: Dragon, Cloud
+  type: "monster"
   group: dragon
   stats:
     armor_class: "22"
@@ -79,6 +82,7 @@
     - 'All cloud dragons have the power to assume the form of any type of humanoid (as described in the spell charm person) at will in a manner otherwise equivalent to the spell polymorph self.'
 
 - name: Elemental, Air
+  type: "monster"
   variants:
     staff:
       armor_class: "18 (m)"
@@ -100,6 +104,7 @@
       xp: "3,385"
 
 - name: Camel
+  type: "beast_of_burden"
   stats:
     armor_class: "13"
     hit_dice: "2"
@@ -114,6 +119,7 @@
     - 'Camels are large animals found in arid environments that bear distinctive fatty deposits known as "humps" on their backs. There are two relevant species of camel described here: the far more common one-humped dromedary, and the two-humped Bactrian camel. Statistics presented above are for the dromedary; the Bactrian camel is slower and its movement is given in brackets. A light load for a camel is up to 400 pounds; a heavy load, up to 800 pounds.'
 
 - name: Ant, Giant (and Huge, Large)
+  type: "monster"
   variants:
     giant:
       armor_class: "17"
@@ -141,12 +147,14 @@
     - "Large and huge ants are similar to giant ants in all ways except for size; large ants are 1 to 2 feet long, while huge ants are 3 to 4 feet in length. Though smaller, their colonies have more members, and so their lair treasures are of similar size to those found in the lairs of giant ants."
 
 - name: Basilisk
+  type: "monster"
   description:
     - 'A basilisk is a giant six-legged lizard-like monster that petrifies living creatures with its gaze. A basilisk has dark brown, green, or black skin on its back and a pale yellow or white belly. Adults reach a body length of 5 to 7 feet with a tail of roughly equal length, and a weight of 250 to 400 pounds. There is no particular difference in size between males and females.'
     - 'Any living creature meeting the gaze of a basilisk must save vs. Petrify or be turned to stone instantly. In general, any creature surprised by the basilisk will meet its gaze. Those who attempt to fight the monster while averting their eyes suffer penalties of -4 to attack and -2 to AC. It is possible to use a mirror to fight the monster, in which case the penalties are -2 to attack and no penalty to AC. If a basilisk sees its own reflection in a mirror it must save vs. Petrify or be turned to stone; a petrified basilisk loses its power to petrify. Basilisks instinctively avoid mirrors or other reflective surfaces, even drinking with their eyes closed, but if an attacker can manage to surprise the monster with a mirror it may see its reflection.'
     - 'The greater basilisk appears identical to the common variety, save that it is larger, having a body length of about 8 feet with a 7 to 9 foot long tail and weighing between 400 and 750 pounds. The skin of the greater basilisk is toxic to the touch, such that any living creature bitten by one or who touches one with bare skin must save vs. Poison or die. This effect persists even after the monster is dead, typically for about 2d20 hours; the only way to tell if the effect has subsided is to touch the corpse, an obviously bad idea.'
 
 - name: Ape, Carnivorous
+  type: "monster"
   stats:
     armor_class: "14"
     hit_dice: "4"

@@ -284,7 +284,7 @@ def process_block(
                 display = raw_name_for[vk]
                 e: dict[str, Any] = {
                     "name": display,
-                    "type": "monster",
+                    "type": "beast_of_burden",
                     "stats": variants[vk],
                 }
                 if display in desc_for:

@@ -44,7 +44,7 @@ def test_beasts_of_burden_not_in_output(monsters):
 
 def test_camel_split_from_beasts(monsters):
     assert "Camel" in monsters
-    assert monsters["Camel"]["type"] == "monster"
+    assert monsters["Camel"]["type"] == "beast_of_burden"
     assert "stats" in monsters["Camel"]
 
 

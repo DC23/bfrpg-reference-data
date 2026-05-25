@@ -81,13 +81,17 @@ def is_age_table(rows: list[list[str]]) -> bool:
 # ---------------------------------------------------------------------------
 
 
+def _norm_stat(value: str) -> str:
+    return value.replace("\n", " ")
+
+
 def parse_single_entity_stats(rows: list[list[str]]) -> dict[str, str]:
     stats: dict[str, str] = {}
     for row in rows:
         if len(row) >= 2 and row[0].strip():
             key = normalise_key(row[0])
             if key:
-                stats[key] = row[1]
+                stats[key] = _norm_stat(row[1])
     return stats
 
 
@@ -137,14 +141,14 @@ def parse_multi_entity_stats(
         if len(non_empty) == 1:
             v = non_empty[0][1].strip()
             if v and (v[0] in _DASHES or v[-1] in _DASHES):
-                shared = v.strip(_DASHES).strip()
+                shared = _norm_stat(v.strip(_DASHES).strip())
                 for vk in current_keys:
                     variants[vk][key] = shared
                 continue
 
         for i, vk in enumerate(current_keys):
             if i < len(values) and values[i].strip():
-                variants[vk][key] = values[i]
+                variants[vk][key] = _norm_stat(values[i])
 
     return variant_keys, raw_name_for, variants
 

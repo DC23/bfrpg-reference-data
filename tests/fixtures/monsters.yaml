@@ -2,7 +2,7 @@
   stats:
     armor_class: "18"
     hit_dice: "6+1*"
-    no_of_attacks: "2 claws, 1 bite\nor 1d8 spikes (180' range)"
+    no_of_attacks: "2 claws, 1 bite or 1d8 spikes (180' range)"
     damage: "1d4 claw, 2d4 bite, 1d6 spike"
     movement: "40' Fly 60' (10')"
     no_appearing: "1d2, Wild 1d4, Lair 1d4"
@@ -16,7 +16,7 @@
     troll:
       armor_class: "16"
       hit_dice: "6*"
-      damage: "1d6 claw,\n1d10 bite"
+      damage: "1d6 claw, 1d10 bite"
       movement: "40'"
       no_appearing: "1d8, Wild 1d8, Lair 1d8"
       save_as: "Fighter: 6"
@@ -26,7 +26,7 @@
     trollwife:
       armor_class: "17"
       hit_dice: "7*"
-      damage: "1d8 claw,\n2d6 bite"
+      damage: "1d8 claw, 2d6 bite"
       movement: "40'"
       save_as: "Fighter: 7"
       morale: "10 (8), see below"
@@ -104,6 +104,33 @@
     xp: "75"
   description:
     - 'Camels are large animals found in arid environments that bear distinctive fatty deposits known as "humps" on their backs. There are two relevant species of camel described here: the far more common one-humped dromedary, and the two-humped Bactrian camel. Statistics presented above are for the dromedary; the Bactrian camel is slower and its movement is given in brackets. A light load for a camel is up to 400 pounds; a heavy load, up to 800 pounds.'
+
+- name: Ant, Giant (and Huge, Large)
+  variants:
+    giant:
+      armor_class: "17"
+      hit_dice: "4"
+      no_of_attacks: "1 bite"
+      no_appearing: "2d6, Lair 4d6"
+      morale: "7 on first sighting, 12 after engaged"
+      treasure_type: "U or special"
+      xp: "240"
+    huge:
+      armor_class: "15"
+      hit_dice: "2"
+      no_appearing: "3d6, Lair 4d8"
+      morale: "7 on first sighting, 12 after engaged"
+      treasure_type: "U or special"
+    large:
+      armor_class: "13"
+      hit_dice: "1"
+      no_appearing: "4d6, Lair 4d10"
+      morale: "7 on first sighting, 12 after engaged"
+      treasure_type: "U or special"
+  description:
+    - "Giant ants are fantastically enlarged versions of the more common variety of ants. Normal workers are 5 to 6 feet long; queens are larger, growing up to 9 feet in length. Giant ants may be red or black; there is no statistical difference between them. Though relatively shy when first encountered, once combat begins they will fight to the death. They are known to collect shiny things, and so will sometimes have a small amount of treasure in their lair."
+    - "Giant ants may occasionally mine shiny metals such as gold or silver; one in three (1-2 on 1d6) giant ant lairs will contain 1d100 x 1d100 gp value in relatively pure nuggets."
+    - "Large and huge ants are similar to giant ants in all ways except for size; large ants are 1 to 2 feet long, while huge ants are 3 to 4 feet in length. Though smaller, their colonies have more members, and so their lair treasures are of similar size to those found in the lairs of giant ants."
 
 - name: Basilisk
   description:

@@ -22,6 +22,8 @@ DATA_DIR = ROOT / "data"
 # En-dash and em-dash — both appear in shared-value decorators in the source
 _DASHES = "–—"
 
+_REDIRECT_RE = re.compile(r"^See (.+?) on page \d+\.$")
+
 _GROUP_INTROS: dict[str, str] = {
     "Dragon": "dragon",
     "Elemental": "elemental",
@@ -253,6 +255,10 @@ def process_block(
     ]
 
     if not tables or not is_stat_table(tables[0][0]):
+        if len(description) == 1:
+            m = _REDIRECT_RE.match(description[0])
+            if m:
+                return [{"name": name, "type": "redirect", "target": m.group(1)}]
         entry = {"name": name, "type": "group_intro"}
         if description:
             entry["description"] = description

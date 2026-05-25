@@ -1,3 +1,11 @@
+- name: Assassin Vine
+  type: "redirect"
+  target: "Strangle Vine"
+
+- name: Aurochs
+  type: "redirect"
+  target: "Cattle (including Aurochs and Bison)"
+
 - name: Manticore
   stats:
     armor_class: "18"

@@ -8,3 +8,4 @@ notes.md
 **/__pycache__/
 **/*.pyc
 *lock.json
+docs/
